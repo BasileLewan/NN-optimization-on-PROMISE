@@ -3,6 +3,10 @@ import math
 import matplotlib.pyplot as plt
 from tensorflow import keras
 from tensorflow.keras import layers
+from tensorflow.keras.backend import set_floatx
+
+set_floatx('float64')
+
 
 x = np.arange(0, 2*math.pi, .005)
 y = np.sin(x)
@@ -18,11 +22,11 @@ model.fit(x, y, epochs=50, batch_size=5)
 
 scores = model.evaluate(x, y, verbose=0)
 
-model_json = model.to_json()
-with open("model.json", "w") as json_file:
-    json_file.write(model_json)
-model.save_weights("model.h5")
-model.save("arch.h5", include_optimizer=False)
+# model_json = model.to_json()
+# with open("model.json", "w") as json_file:
+#     json_file.write(model_json)
+# model.save_weights("model.h5")
+model.save("sine_nn.h5", include_optimizer=False)
 preds = model.predict(x)
 plt.plot(x, y, 'b', x, preds, 'r--')
 plt.ylabel('Y / Predicted Value')
